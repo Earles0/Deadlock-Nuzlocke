@@ -11,7 +11,7 @@ class NuzlockeTracker {
         
         // MANUAL EDITING: Add hero names here to mark them as dead
         // Example: this.deadHeroes = ['Abrams', 'Bebop', 'Billy'];
-        this.deadHeroes = ['Haze'];
+        this.deadHeroes = [];
         
         this.heroStates = this.loadHeroStates();
         
@@ -231,4 +231,5 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('- nuzlockeTracker.resetAllHeroes() - Reset all heroes to alive');
     console.log('- nuzlockeTracker.toggleAdminMode() - Toggle admin mode');
 });
+
 
