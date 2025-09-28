@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- 
+    METRO NUZLOCKE CHALLENGE TRACKER
+    
+    TO MARK HEROES AS DEAD:
+    1. Open script.js
+    2. Find line 14: this.deadHeroes = [];
+    3. Add hero names inside the brackets, like: this.deadHeroes = ['Abrams', 'Bebop'];
+    4. Save and commit to GitHub
+    5. Everyone will see the updated status!
+    
+    Example: this.deadHeroes = ['Abrams', 'Bebop', 'Billy', 'Calico'];
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Nuzlocke Challenge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>METRO NUZLOCKE CHALLENGE</h1>
+            <div class="admin-controls">
+                <button id="adminToggle" class="admin-btn">Admin Mode</button>
+                <div id="adminPanel" class="admin-panel hidden">
+                    <p>Click on heroes to disable/enable them</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Heroes</h3>
+                    <span id="totalHeroes">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Alive</h3>
+                    <span id="aliveHeroes">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Dead</h3>
+                    <span id="deadHeroes">0</span>
+                </div>
+            </div>
+
+            <div class="heroes-grid" id="heroesGrid">
+                <!-- Heroes will be dynamically generated here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
