@@ -13,7 +13,6 @@ class NuzlockeTracker {
         // Example: this.deadHeroes = ['Abrams', 'Bebop', 'Billy'];
         this.deadHeroes = [];
         
-        this.adminMode = false;
         this.heroStates = this.loadHeroStates();
         
         this.init();
@@ -22,98 +21,8 @@ class NuzlockeTracker {
     init() {
         this.renderHeroes();
         this.updateStats();
-        this.setupEventListeners();
     }
     
-    setupEventListeners() {
-        const adminToggle = document.getElementById('adminToggle');
-        adminToggle.addEventListener('click', () => this.toggleAdminMode());
-    }
-    
-    toggleAdminMode() {
-        this.adminMode = !this.adminMode;
-        const adminBtn = document.getElementById('adminToggle');
-        const adminPanel = document.getElementById('adminPanel');
-        
-        if (this.adminMode) {
-            adminBtn.textContent = 'Exit Admin Mode';
-            adminBtn.classList.add('active');
-            adminPanel.classList.remove('hidden');
-            this.addAdminModeToCards();
-        } else {
-            adminBtn.textContent = 'Admin Mode';
-            adminBtn.classList.remove('active');
-            adminPanel.classList.add('hidden');
-            this.removeAdminModeFromCards();
-        }
-    }
-    
-    addAdminModeToCards() {
-        const heroCards = document.querySelectorAll('.hero-card');
-        heroCards.forEach(card => {
-            card.classList.add('admin-mode');
-            card.addEventListener('click', (e) => this.toggleHeroState(e));
-        });
-    }
-    
-    removeAdminModeFromCards() {
-        const heroCards = document.querySelectorAll('.hero-card');
-        heroCards.forEach(card => {
-            card.classList.remove('admin-mode');
-            card.removeEventListener('click', this.toggleHeroState);
-        });
-    }
-    
-    toggleHeroState(event) {
-        if (!this.adminMode) return;
-        
-        const heroCard = event.currentTarget;
-        const heroName = heroCard.dataset.hero;
-        
-        // Toggle hero state
-        this.heroStates[heroName] = this.heroStates[heroName] === 'alive' ? 'dead' : 'alive';
-        
-        // Save to localStorage
-        this.saveHeroStates();
-        
-        // Re-render the specific hero card
-        this.renderHeroCard(heroName, heroCard);
-        
-        // Update stats
-        this.updateStats();
-        
-        // Show feedback
-        this.showFeedback(heroName, this.heroStates[heroName]);
-    }
-    
-    showFeedback(heroName, status) {
-        // Create temporary feedback element
-        const feedback = document.createElement('div');
-        feedback.className = `feedback ${status}`;
-        feedback.textContent = `${heroName} is now ${status}!`;
-        feedback.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${status === 'alive' ? '#2ecc71' : '#e74c3c'};
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        `;
-        
-        document.body.appendChild(feedback);
-        
-        // Remove after 3 seconds
-        setTimeout(() => {
-            feedback.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => {
-                document.body.removeChild(feedback);
-            }, 300);
-        }, 3000);
-    }
     
     renderHeroes() {
         const heroesGrid = document.getElementById('heroesGrid');
