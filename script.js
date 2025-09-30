@@ -21,6 +21,7 @@ class NuzlockeTracker {
     init() {
         this.renderHeroes();
         this.updateStats();
+        this.fetchRank();
     }
     
     
@@ -34,6 +35,22 @@ class NuzlockeTracker {
         });
     }
     
+    async fetchRank() {
+        const displayEl = document.getElementById('rank');
+        if (!displayEl) return;
+        try {
+            const url = 'https://api.deadlock-api.com/v1/commands/resolve?region=Europe&account_id=824933313&template=%7Brank%7D';
+            const response = await fetch(url, { method: 'GET', mode: 'cors' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const text = await response.text();
+            const sanitized = (text || '').trim();
+            displayEl.textContent = sanitized || 'N/A';
+        } catch (err) {
+            console.error('Failed to fetch rank', err);
+            displayEl.textContent = 'N/A';
+        }
+    }
+
     createHeroCard(heroName) {
         const heroCard = document.createElement('div');
         heroCard.className = 'hero-card';
@@ -231,7 +248,3 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('- nuzlockeTracker.resetAllHeroes() - Reset all heroes to alive');
     console.log('- nuzlockeTracker.toggleAdminMode() - Toggle admin mode');
 });
-
-
-
-
